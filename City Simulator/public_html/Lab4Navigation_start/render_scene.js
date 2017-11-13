@@ -9,6 +9,7 @@ var uTexture;
 var uProjection;  //  shader uniform variable for projection matrix
 var uModel_view;  //  shader uniform variable for model-view matrix
 var checkerboard;
+var road;
 var imageTexture;
 var greyscale;
 var uColorMode;
@@ -52,6 +53,7 @@ window.onload = function init()
     checkerboard = new Checkerboard();
     greyscale = new Greyscale();
     imageTexture = new ImageTexture("../textures/test.jpg");
+    road = new ImageTexture("../textures/Road.jpg");
 
     render();
 };
@@ -124,119 +126,14 @@ function render()
     Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
 
-//All Disks----------------------------------------------------//
 
     stack.push();
-    stack.multiply(translate(0, 2, 0));
-    gl.uniform1f(uColorMode, 0);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.disk);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(-5, 2, 0));
-    gl.uniform1f(uColorMode, 1);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.disk);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(5, 2, 0));
+    stack.multiply(scalem(3, 0.01, 10));
     gl.uniform1f(uColorMode, 2);
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
+    road.activate();
     gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.disk);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(-10, 2, 0));
-    gl.uniform1f(uColorMode, 3);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.disk);
-    stack.pop();
-
-//End of Disks-----------------------------------------------//
-
-//All Cylinders----------------------------------------------//
-
-    stack.push();
-    stack.multiply(translate(0, 6, 0));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
-    gl.uniform1f(uColorMode, 0);
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cylinder);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(-5, 6, 0));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
-    gl.uniform1f(uColorMode, 1);
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cylinder);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(5, 6, 0));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
-    gl.uniform1f(uColorMode, 2);
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cylinder);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(-10, 6, 0));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    greyscale.activate();
-    gl.uniform1f(uColorMode, 3);
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cylinder);
-    stack.pop();
-    
-    
-    stack.push();
-    stack.multiply(translate(0, -1, 0));
-    stack.multiply(scalem(2, 2, 1));
-    gl.uniform1f(uColorMode, 0);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cone);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(-5, -1, 0));
-    stack.multiply(scalem(2, 2, 1));
-    gl.uniform1f(uColorMode, 1);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cone);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(5, -1, 0));
-    stack.multiply(scalem(2, 2, 1));
-    gl.uniform1f(uColorMode, 2);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cone);
-    stack.pop();
-
-    stack.push();
-    stack.multiply(translate(-10, -1, 0));
-    stack.multiply(scalem(2, 2, 1));
-    gl.uniform1f(uColorMode, 3);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
-    Shapes.drawPrimitive(Shapes.cone);
+    Shapes.drawPrimitive(Shapes.road);
     stack.pop();
 
 
