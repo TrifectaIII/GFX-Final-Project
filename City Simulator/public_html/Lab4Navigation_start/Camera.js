@@ -1,9 +1,9 @@
+//Dakota + Bailey Lab 5
+
 /**
  * Contains all of the parameters needed for controlling the camera.
  * @return {Camera}
  */
-
-//D'Angelo Guiton Trent
 function Camera() {
 
     this.fov = 60;           // Field-of-view in Y direction angle (in degrees)
@@ -37,45 +37,34 @@ Camera.prototype.reset = function () {
  * @return none
  */
 Camera.prototype.calcUVN = function () {
-    this.viewRotation = mat4(1);  // identity - placeholder only
 
-// TO DO:  COMPLETE THIS CODE
     var n = vec4(normalize(this.VPN, true));
-
-    var u = vec4(cross(this.VUP, n), 0);
-    u = normalize(u, true);
-    //console.log('u = ' + u);
-    var v = vec4(cross(n, u), 0);
-    //console.log('cross nu = ' + cross(n,u),0);
-    //console.log('v= ' + v);
-    //console.log('n= ' + n);
-    var t = vec4(0, 0, 0, 1);
-
-    this.viewRotation = mat4(u, v, n, t);
+	
+    var uc = cross(this.VUP,n);
+	uc.push(0);
+    var u = vec4(normalize(uc, true));
+	
+    var vc = cross(n,u);
+	vc.push(0);
+	var v = vec4(normalize(vc, true));
+	
+    this.viewRotation = [
+		u,
+		v,
+		n,
+		vec4(0,0,0,1)];
     this.viewRotation.matrix = true;
-    //printm(this.viewRotation);
 };
 
 /**
  * Calculate the camera's view matrix given the 
  * current eye and viewRotation
- * @return view matrix (mat4)
+ * @return view matrix (mat_npc)
  */
-
-//calculates V = R^-1 * T^-1 = R^1*T^1
 Camera.prototype.calcViewMat = function () {
-    var mv = mat4(1);  // identity - placeholder only
-// TO DO:  COMPLETE THIS CODE
 
-    var eyeTranslate = translate(-this.eye[0], -this.eye[1], -this.eye[2]);
-
-    //console.log('hi');
-    //printm(this.viewRotation);
-    var tempRot = this.viewRotation;
-
-    //setting the new 
-    var mv = mult(tempRot, eyeTranslate);
-
+    var eyeTranslate = translate(-this.eye[0],-this.eye[1],-this.eye[2]);
+    var mv = mult(this.viewRotation,eyeTranslate);
     return mv;
 };
 
@@ -105,33 +94,32 @@ Camera.prototype.motion = function () {
             var ry = rotateY(10 * dy);  // rotation matrix around y
             var rx = rotateX(10 * dx);  // rotation matrix around x
 
-//          TO DO: NEED TO IMPLEMENT TUMBLE FUNCTION
-            this.tumble(rx, ry);   //  <----  NEED TO IMPLEMENT THIS FUNCTION BELOW!!!
+            this.tumble(rx, ry);   // 
             mouseState.startx = mouseState.x;
             mouseState.starty = mouseState.y;
             break;
         case mouseState.actionChoice.TRACK:  // PAN   - right mouse button
             var dx = -0.05 * mouseState.delx; // amount to pan along x
             var dy = 0.05 * mouseState.dely;  // amount to pan along y
-            //this.eye = add(this.eye, this.viewRotation[3]);
-
-            //this.eye = mult(translate(dx, dy, 0), this.eye);
-
-            this.eye = add(this.eye, scale(dx, this.viewRotation[0]));
-            this.eye = add(this.eye, scale(dy, this.viewRotation[0]));
-            //  Calculate this.eye 
+            
+            //this.eye = vec4(this.eye[0]+dx,this.eye[1]+dy,this.eye[2],1);
+			
+			var x = scale(dx, this.viewRotation[0]);
+			this.eye = add(x, this.eye);
+			
+			var y = scale(dy, this.viewRotation[1]);
+			this.eye = add(y, this.eye);
+			
+			
             mouseState.startx = mouseState.x;
             mouseState.starty = mouseState.y;
             break;
         case mouseState.actionChoice.DOLLY:   // middle mouse button
             var dx = 0.05 * mouseState.delx;  // amount to move backward/forward
             var dy = 0.05 * mouseState.dely;
-            //this.eye = mult(translate(0, 0, -dx), this.eye);
-            //
-
-            this.eye = add(this.eye, scale(dx, this.viewRotation[2]));
-
-            //  Calculate this.eye 
+            
+            var z = scale(dy, this.viewRotation[2]);
+			this.eye = add(z, this.eye);
             mouseState.startx = mouseState.x;
             mouseState.starty = mouseState.y;
             break;
@@ -139,30 +127,14 @@ Camera.prototype.motion = function () {
             console.log("unknown action: " + mouseState.action);
     }
     render();
-
-
-    function scale(s, u)
-    {
-        if (!Array.isArray(u)) {
-            throw "scale: second parameter " + u + " is not a vector";
-        }
-
-        var result = [];
-        for (var i = 0; i < u.length; ++i) {
-            result.push(s * u[i]);
-        }
-
-        return result;
-    }
-    ;
 };
 
 /**
  * Rotate about the world coordinate system about y (left/right mouse drag) and/or 
  * about a line parallel to the camera's x-axis and going through the WCS origin 
  * (up/down mouse drag).
- * @param {mat4} rx  rotation matrix around x
- * @param {mat4} ry  rotation matrix around y
+ * @param {mat_npc} rx  rotation matrix around x
+ * @param {mat_npc} ry  rotation matrix around y
  * @return none
  */
 Camera.prototype.tumble = function (rx, ry) {
@@ -173,101 +145,38 @@ Camera.prototype.tumble = function (rx, ry) {
     // We then translate back. The result is then composed with the view matrix to give a new view matrix.
     //  When done, should have new value for eye and viewRotation
 
-    // DO THIS CONTROL LAST - IT IS THE MOST DIFFICULT PART
-    var view = this.calcViewMat();  // current view matrix
-    //console.log('the ViewMat = ');
-    //printm(view);
-    tumblePoint = vec4(0, 0, 0, 1);
-    nTumblePoint = negate(tumblePoint);
-    tumblePointPrime = mult(view, tumblePoint);
-    nTumblePointPrime = negate(tumblePointPrime);
 
-    //console.log('tumblePoint = ' + tumblePoint);
-    //console.log('nTumblePoint = ' + nTumblePoint);
-    //console.log('tumblePointPrime = ' + tumblePointPrime);
-    //console.log('ntumblePointPrime = ' + nTumblePointPrime);
+    var view_old = this.calcViewMat();  
+	
+	var pc = vec4(0,0,0,1);
+	var pc_p = mult(view_old, pc); 
 
+	//var t_pc = translate (pc[0], pc[1], pc[2]);
+	//var t_npc = translate (-pc[0], -pc[1], -pc[2]) ;
+	
+	var t_pc_p = translate(pc_p[0], pc_p[1], pc_p[2]);
+	var t_npc_p = translate(-pc_p[0], -pc_p[1], -pc_p[2]);
 
+	view_new = mult(view_old,ry);
+	view_new = mult(t_npc_p, view_new);
+	view_new = mult(rx, view_new);
+	view_new = mult(t_pc_p, view_new);
+	
+	var rot_inverse = transpose(view_new); 
+	rot_inverse[3] = vec4(0,0,0,1); 
+	
+	this.viewRotation = transpose(rot_inverse); 
+	
+	var eye_offset = mult(rot_inverse, view_new); 
+	this.eye = vec4(-eye_offset[0][3], -eye_offset[1][3], -eye_offset[2][3], 1); 
 
-    //T(P)
-    //var TP = transpose(mat4(f, s, t, tumblePoint));
-    var TP = translate(tumblePoint[0], tumblePoint[1], tumblePoint[2]);
-    //transpose(TP);
-    //console.log('TP = ' + TP);
-    //printm(TP);
-
-    //T(-P)
-    //var TNP = transpose(mat4(f, s, t, nTumblePoint));
-    var TNP = translate(nTumblePoint[0], nTumblePoint[1], nTumblePoint[2]);
-    //transpose(TNP);
-    //console.log('TNP = ' + TNP);
-    //printm(TNP);
-
-    //T(P')
-    //var TPP = transpose(mat4(f, s, t, tumblePointPrime));
-    var TPP = translate(tumblePointPrime[0], tumblePointPrime[1], tumblePointPrime[2]);
-    //transpose(TPP);
-    //console.log('TPP = ' + TPP);
-    //printm(TPP);
-
-    //T(-P')
-    //var TNPP = transpose(mat4(f, s, t, nTumblePointPrime));
-    var TNPP = translate(nTumblePointPrime[0], nTumblePointPrime[1], nTumblePointPrime[2]);
-    //transpose(TNPP);
-    //console.log('TNPP = ' + TNPP);
-    //printm(TNPP);
-
-
-    var A = mult(mult(TP, ry), TNP);
-
-
-    //console.log('A = ');
-    //printm(A);
-
-    var B = mult(mult(TPP, rx), TNPP);
-    //console.log('B = ');
-    //printm(B);
-
-
-    var viewNew = mult(mult(B, view), A);
-
-
-
-
-
-    //console.log('this is the viewNew');
-    //printm(viewNew);
-    this.viewRotation = mat4Copy(viewNew);
-    //console.log('this is the copy of viewNew');
-    //printm(this.viewRotation);
-    this.viewRotation [0][3] = 0;
-    this.viewRotation [1][3] = 0;
-    this.viewRotation [2][3] = 0;
-    this.viewRotation [3][3] = 1;
-    //console.log('this is the viewRot');
-    //printm(this.viewRotation);
-//
-//
-//
-    var Teye = mult(transpose(this.viewRotation), viewNew);
-    //console.log('this is the Teye');
-    //printm(Teye);
-    this.eye = vec4(-Teye[0][3], -Teye[1][3], -Teye[2][3], 1);
-    //console.log('Teye (0,3) = ' + -Teye[0][3]);
-    //console.log('Teye (0,3) = ' + -Teye[0][3]);
-    //console.log('Teye (0,3) = ' + -Teye[0][3]);
-    //console.log('New eye = ' + this.eye);
-
-
-    // need to get eye position back
-    //  Here, rotInverse is the inverse of the rotational part of the view matrix.
-    //  eye = -rotInverse*view*origin  -> this gives the location of the WCS origin in the eye coordinates
-
-
+   
+   
 };
 
 Camera.prototype.keyAction = function (key) {
     var alpha = 1.0;  // used to control the amount of a turn during the flythrough 
+	var speed = 5;
     switch (key) {     // different keys should be used because these do thing sin browser
         case 'W':  // turn right - this is implemented
             console.log("turn right");
@@ -295,49 +204,34 @@ Camera.prototype.keyAction = function (key) {
             break;
         case 'Q':  // move forward
             console.log("move forward");
-            var thing = scale(alpha, this.viewRotation[2]);
-            this.eye = add(this.eye, thing);
+			var z = scale(-alpha, this.viewRotation[2]);
+			this.eye = add(z, this.eye);
+			
             break;
         case 'A':  //  move backward
             console.log("move backward");
-            var thing = scale(-alpha, this.viewRotation[2]);
-            this.eye = add(this.eye, thing);
+            var z = scale(alpha, this.viewRotation[2]);
+			this.eye = add(z, this.eye);
             break;
         case 'R':  //  reset
             console.log("reset");
             this.reset();
             break;
-        case 'L':
-            lightAngleY = lightAngleY + 10;
+		case 'M':  //  pedal forward
+            console.log("pedal forward");
+            thetaX -= speed;
             break;
-        case 'K':
-            console.log("Moving the Light Dogg");
-            lightAngleX = lightAngleX + 10;
+		case 'N':  //  pedal backward
+            console.log("pedal back");
+            thetaX += speed;
             break;
-        case 'J':
-            console.log("Moving the Light Dogg");
-            lightAngleX = lightAngleX+10;
-            lightAngleY = lightAngleY+5;
+		case 'K':  //  rotate light
+            console.log("rotate light");
+            thetaY -= speed;
             break;
-
+		case 'L':  //  rotate light
+            console.log("rotate light");
+            thetaY += speed;
+            break;
     }
-
-
-    function scale(s, u)
-    {
-        if (!Array.isArray(u)) {
-            throw "scale: second parameter " + u + " is not a vector";
-        }
-
-        var result = [];
-        for (var i = 0; i < u.length; ++i) {
-            result.push(s * u[i]);
-        }
-
-        return result;
-    }
-    ;
-
-
-
 };
