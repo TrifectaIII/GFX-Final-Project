@@ -225,13 +225,26 @@ Camera.prototype.keyAction = function (key) {
             console.log("pedal back");
             thetaX += speed;
             break;
-		case 'K':  //  rotate light
-            console.log("rotate light");
-            thetaY -= speed;
+//		case 'K':  //  rotate light
+//            console.log("rotate light");
+//            thetaY -= speed;
+//            break;
+//		case 'L':  //  rotate light
+//            console.log("rotate light");
+//            thetaY += speed;
+//            break;
+//            
+            case 'L':
+            lightAngleY = lightAngleY + 10;
             break;
-		case 'L':  //  rotate light
-            console.log("rotate light");
-            thetaY += speed;
+        case 'K':
+            console.log("Moving the Light Dogg");
+            lightAngleX = lightAngleX + 10;
+            break;
+        case 'J':
+            console.log("Moving the Light Dogg");
+            lightAngleX = lightAngleX+10;
+            lightAngleY = lightAngleY+5;
             break;
     }
 };
