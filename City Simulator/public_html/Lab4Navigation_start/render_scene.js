@@ -19,7 +19,7 @@ var lighting = new Lighting();
 var lightAngleY = 5;
 var lightAngleX = 5;
 var program;
-
+var markettex;
 
 window.onload = function init()
 {
@@ -54,6 +54,8 @@ window.onload = function init()
     greyscale = new Greyscale();
     imageTexture = new ImageTexture("../textures/test.jpg");
     road = new ImageTexture("../textures/Road.jpg");
+    markettex = new ImageTexture("../textures/market.jpg");
+    
 
     render();
 };
@@ -129,15 +131,17 @@ function render()
 
     stack.push();
     stack.multiply(scalem(3, 0.01, 10));
+    stack.multiply(translate(0,-1,0));
     gl.uniform1f(uColorMode, 2);
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     road.activate();
     gl.uniform4fv(uColor, vec4(1.0, 1.0, 0.0, 1.0));
     Shapes.drawPrimitive(Shapes.road);
     stack.pop();
-
-
-
+    
+    stack.push();
+    mar = new Market();
+    mar.drawMarket();
 
 }
 
