@@ -20,6 +20,8 @@ var lightAngleY = 5;
 var lightAngleX = 5;
 var program;
 var markettex;
+var officetex;
+var factorytex;
 
 window.onload = function init()
 {
@@ -55,7 +57,8 @@ window.onload = function init()
     imageTexture = new ImageTexture("../textures/test.jpg");
     road = new ImageTexture("../textures/Road.jpg");
     markettex = new ImageTexture("../textures/market.jpg");
-    
+    officetex = new ImageTexture("../textures/office.jpg");
+    factorytex = new ImageTexture("../textures/factory.jpg");
 
     render();
 };
@@ -142,6 +145,18 @@ function render()
     stack.push();
     mar = new Market();
     mar.drawMarket();
-
+    stack.pop();
+    
+    stack.push();
+    stack.multiply(translate(2,0,0));
+    off = new Office();
+    off.drawOffice();
+    stack.pop();
+    
+    stack.push();
+    stack.multiply(translate(-2,0,0));
+    fac = new Factory();
+    fac.drawFactory();
+    stack.pop();
 }
 
