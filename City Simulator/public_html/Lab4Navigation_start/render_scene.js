@@ -143,18 +143,19 @@ function render()
     stack.pop();
     
     stack.push();
+    stack.multiply(translate(3.5,0,1));
     mar = new Market();
     mar.drawMarket();
     stack.pop();
     
     stack.push();
-    stack.multiply(translate(2,0,0));
+    stack.multiply(translate(3.5,0,0));
     off = new Office();
     off.drawOffice();
     stack.pop();
     
     stack.push();
-    stack.multiply(translate(-2,0,0));
+    stack.multiply(translate(3.5,0,-1));
     fac = new Factory();
     fac.drawFactory();
     stack.pop();
