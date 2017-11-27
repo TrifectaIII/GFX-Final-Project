@@ -3,6 +3,7 @@ function Market(){
 }
 
 Market.prototype.drawMarket = function () {
+    gl.uniform1f(uColorMode, 2);
     stack.push();
     markettex.activate();
     stack.multiply(translate(0, 0.5, 0));
