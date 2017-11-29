@@ -12,6 +12,11 @@ var checkerboard;
 var road;
 var imageTexture;
 var greyscale;
+//var roof;
+var roofbw;
+var Tapartment;
+var Tpark;
+var Thospital;
 var uColorMode;
 var camera = new Camera();
 var stack = new MatrixStack();
@@ -54,7 +59,12 @@ window.onload = function init()
     greyscale = new Greyscale();
     imageTexture = new ImageTexture("../textures/test.jpg");
     road = new ImageTexture("../textures/Road.jpg");
-
+    roof = new ImageTexture("../textures/roofing.jpg");
+    roofbw = new ImageTexture("../textures/roofingBW.jpg");
+    Tapartment = new ImageTexture("../textures/Apartment.jpg");
+    Tpark = new ImageTexture("../textures/park.jpg");
+    Tsidewalk = new ImageTexture("../textures/Sidewalk.jpg");
+    Thospital = new ImageTexture("../textures/Hospital.jpg");
     render();
 };
 
@@ -136,14 +146,30 @@ function render()
     Shapes.drawPrimitive(Shapes.road);
     stack.pop();
 
-//    stack.push();
-//    stack.multiply(scalem(2, 2, 2));
-//    g.uniform1f(uColorMode, 3);
-//    road.activate();
-//    g.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-//    Shapes.drawPrimitive(Shapes.frustum);
-//    stack.pop();
 
+    stack.push();
+    stack.multiply((translate(4, 0, 2)));
+    park = Shapes.park;
+    park.drawPark(0.05);
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    stack.pop();
+
+    stack.push();
+    //stack.multiply(scalem(1,1,1));
+    stack.multiply(translate(4, 0, 0));
+    apartment = Shapes.apartment;
+    apartment.drawApartment(2);
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    stack.pop();
+
+
+    stack.push();
+    //stack.multiply(scalem(1,1,1));
+    stack.multiply(translate(4, 0, 4));
+    hospital = Shapes.hospital;
+    hospital.drawHospital(2);
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    stack.pop();
 
 
 }

@@ -27,7 +27,7 @@
             color = vColor;
             texCoord = vTexCoord;
             yval = vPosition.y;
-            
+
 
             fN = normalize( uModel_view*vNormal ).xyz;
             fE = -(uModel_view*vPosition).xyz;
@@ -57,51 +57,51 @@
             uniform float uShininess;
             uniform sampler2D uTexture;
             uniform float uColorMode;
-            
+
 
             void main()
             {
             vec4 myColor;// = texture2D(uTexture, texCoord);
-            
+
             vec4 c0 = vec4(0.0, 0.0, 1.0, 1.0);
             vec4 c1 = vec4(0.6, 0.6, 0.2, 1.0);
             vec4 c2 = vec4(0.0, 1.0, 0.0, 1.1);
             vec4 c3 = vec4(1.0, 0.5, 0.2, 1.0);
             vec4 c4 = vec4(1.0, 1.0, 1.0, 1.0);
-            
+
             float h0 = -1.0;
             float h1 = 0.05;
             float h2 = 0.4;
             float h3 = 0.7;
             float h4 = 1.0;
-            
+
             vec4 hColor = color;
             if(yval>h0) {
-                hColor = mix(c0,c1,smoothstep(h0,h2,yval));
+            hColor = mix(c0,c1,smoothstep(h0,h2,yval));
             }
             if(yval>h1) {
-                hColor = mix(c1,c2,smoothstep(h1,h2,yval));
+            hColor = mix(c1,c2,smoothstep(h1,h2,yval));
             }
             if(yval>h3) {
-                hColor = mix(c2,c3,smoothstep(h3,h4,yval));
+            hColor = mix(c2,c3,smoothstep(h3,h4,yval));
             }
-            
-            
+
+
             // Normalize the input lighting vectors
             vec3 N = normalize(fN);
             vec3 E = normalize(fE);
             vec3 L = normalize(fL);
 
             vec3 H = normalize( L + E );
-            
+
             if(uColorMode < 1.0){
-                myColor = color;
+            myColor = color;
             } else if(uColorMode<2.0){
-                myColor = uColor;
+            myColor = uColor;
             } else if(uColorMode<3.0){
-                myColor = texture2D(uTexture, texCoord);
+            myColor = texture2D(uTexture, texCoord);
             } else if(uColorMode<4.0){
-                myColor = hColor;
+            myColor = hColor;
             }
 
             vec4 ambient = uAmbient_product*myColor;
@@ -140,6 +140,11 @@
         <script type="text/javascript" src="geometry/Robot.js"></script>
         <script type="text/javascript" src="geometry/Axis.js"></script>
         <script type="text/javascript" src="geometry/Road.js"></script>
+        <script type="text/javascript" src="geometry/Frustum.js"></script>
+        <script type="text/javascript" src="geometry/Roof.js"></script>
+        <script type="text/javascript" src="geometry/Apartment.js"></script>
+        <script type="text/javascript" src="geometry/Park.js"></script>
+        <script type="text/javascript" src="geometry/Hospital.js"></script>
         <script type="text/javascript" src="geometry/Shapes.js"></script>
         <script type="text/javascript" src="Lighting.js"></script>
         <script type="text/javascript" src="Camera.js"></script>

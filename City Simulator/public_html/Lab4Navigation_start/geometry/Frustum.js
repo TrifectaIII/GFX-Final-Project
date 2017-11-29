@@ -1,3 +1,5 @@
+//only use this through the roof object, the texture coordinates on the top and bottom are screwy
+
 function Frustum() {
 
     this.name = "frustum";
@@ -13,12 +15,12 @@ function Frustum() {
     // Local variables: unique vertices and colors.
     ////////////////////////////////////////////////////////////
     var unique_vertices = [
-        vec4(-1.0, -1.0, 1.0, 1.0),  // v0
-        vec4(1.0, -1.0, 1.0, 1.0),   // v1
+        vec4(-0.9, -1.0, 0.9, 1.0),  // v0
+        vec4(0.9, -1.0, 0.9, 1.0),   // v1
         vec4(-1.0, 1.0, 1.0, 1.0),   // v2
         vec4(1.0, 1.0, 1.0, 1.0),    // v3
-        vec4(-1.0, -1.0, -1.0, 1.0), // v4
-        vec4(1.0, -1.0, -1.0, 1.0),  // v5
+        vec4(-0.9, -1.0, -0.9, 1.0), // v4
+        vec4(0.9, -1.0, -0.9, 1.0),  // v5
         vec4(-1.0, 1.0, -1.0, 1.0),  // v6
         vec4(1.0, 1.0, -1.0, 1.0)    // v7
     ];
