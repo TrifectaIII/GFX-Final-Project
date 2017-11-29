@@ -14,6 +14,7 @@ Shapes.cone = new Cone();
 Shapes.cylinder = new Cylinder();
 Shapes.disk = new Disk();
 Shapes.road = new Road();
+Shapes.pyramid = new Pyramid();
 //Shapes.robot = new Robot(0, 0, 0, 3);
 // TO DO: ADD OTHER SHAPES
 
@@ -23,6 +24,7 @@ Shapes.initShapes = function () {
     Shapes.initBuffers(Shapes.cylinder);
     Shapes.initBuffers(Shapes.disk);
     Shapes.initBuffers(Shapes.road);
+    Shapes.initBuffers(Shapes.pyramid);
     //Shapes.axis.initBuffer();
 };
 

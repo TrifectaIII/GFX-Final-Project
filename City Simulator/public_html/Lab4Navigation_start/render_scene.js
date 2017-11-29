@@ -19,9 +19,11 @@ var lighting = new Lighting();
 var lightAngleY = 5;
 var lightAngleX = 5;
 var program;
-var markettex;
 var officetex;
 var factorytex;
+var tenttex;
+var poletex;
+var greentex;
 
 window.onload = function init()
 {
@@ -56,7 +58,9 @@ window.onload = function init()
     greyscale = new Greyscale();
     imageTexture = new ImageTexture("../textures/test.jpg");
     road = new ImageTexture("../textures/Road.jpg");
-    markettex = new ImageTexture("../textures/market.jpg");
+    tenttex = new ImageTexture("../textures/tent.jpg");
+    poletex = new ImageTexture("../textures/pole.jpg");
+    greentex = new ImageTexture("../textures/green.jpg");
     officetex = new ImageTexture("../textures/office.jpg");
     factorytex = new ImageTexture("../textures/factory.jpg");
 
@@ -89,7 +93,13 @@ function shaderSetup() {
     uColorMode = gl.getUniformLocation(program, "uColorMode");
 }
 
+var zdir = true;
+var xdir = true;
+var xco = 0;
+var zco = 0;
 
+var zbar = 10;
+var xbar = 3;
 
 function render()
 {
@@ -106,7 +116,7 @@ function render()
     stack.push();
     var rotatex = rotateX(lightAngleX);
     var rotatey = rotateY(lightAngleY);
-    var rotatexy = mult(rotatex, rotatey);
+    var rotatexy = mult(rotatey, rotatex);
     
 
     var rotate = mult(rotatexy, lighting.light_position);
@@ -115,11 +125,6 @@ function render()
     var lpos = mult(viewMat,rotate);
     gl.uniform4fv(uLight_position, lpos);
 
-
-
-    // Need these 2 lines since camera is sitting at origin. 
-    // Without them, you would be sitting inside the cube.
-    // REMOVE once camera controls are working
     stack.multiply(rotateY(lightAngleY));
     stack.multiply(rotateX(lightAngleX));
     stack.multiply(translate(lighting.light_position[0], lighting.light_position[1], lighting.light_position[2]));
@@ -158,6 +163,35 @@ function render()
     stack.multiply(translate(3.5,0,-1));
     fac = new Factory();
     fac.drawFactory();
+    stack.pop();
+    
+    
+    if (Math.abs(xco) > xbar){
+        xdir = !xdir;
+    }
+    if (Math.abs(zco) > zbar){
+        zdir = !zdir;
+    }
+    
+    if (xdir){
+        xco = xco + 0.1;
+    } else {
+        xco = xco - 0.1;
+    }
+    
+
+    if (zdir){
+        zco = zco + 0.1;
+    } else {
+        zco = zco - 0.1;
+    }
+    
+    gl.uniform1f(uColorMode, 0);
+    stack.push();
+    stack.multiply(translate(xco,0.1,zco));
+    stack.multiply(scalem(0.2,0.2,0.2));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
 }
 
