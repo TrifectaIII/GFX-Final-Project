@@ -18,12 +18,8 @@ Shapes.roof = new Roof();
 Shapes.apartment = new Apartment();
 Shapes.park = new Park();
 Shapes.hospital = new Hospital();
-//Shapes.roof = new Roof();
-
-//Shapes.apartment = new Apartment();
 Shapes.frustum = new Frustum();
-//Shapes.robot = new Robot(0, 0, 0, 3);
-// TO DO: ADD OTHER SHAPES
+Shapes.pyramid = new Pyramid();
 
 Shapes.initShapes = function () {
     Shapes.initBuffers(Shapes.cube);
@@ -31,9 +27,8 @@ Shapes.initShapes = function () {
     Shapes.initBuffers(Shapes.cylinder);
     Shapes.initBuffers(Shapes.disk);
     Shapes.initBuffers(Shapes.road);
-    //Shapes.initBuffers(Shapes.roof);
-    //Shapes.initBuffers(Shapes.apartment);
     Shapes.initBuffers(Shapes.frustum);
+    Shapes.initBuffers(Shapes.pyramid);
     //Shapes.axis.initBuffer();
 };
 
