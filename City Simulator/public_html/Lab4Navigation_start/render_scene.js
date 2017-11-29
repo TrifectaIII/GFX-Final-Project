@@ -12,6 +12,11 @@ var checkerboard;
 var road;
 var imageTexture;
 var greyscale;
+//var roof;
+var roofbw;
+var Tapartment;
+var Tpark;
+var Thospital;
 var uColorMode;
 var camera = new Camera();
 var stack = new MatrixStack();
@@ -64,6 +69,12 @@ window.onload = function init()
     officetex = new ImageTexture("../textures/office.jpg");
     factorytex = new ImageTexture("../textures/factory.jpg");
 
+    roof = new ImageTexture("../textures/roofing.jpg");
+    roofbw = new ImageTexture("../textures/roofingBW.jpg");
+    Tapartment = new ImageTexture("../textures/Apartment.jpg");
+    Tpark = new ImageTexture("../textures/park.jpg");
+    Tsidewalk = new ImageTexture("../textures/Sidewalk.jpg");
+    Thospital = new ImageTexture("../textures/Hospital.jpg");
     render();
 };
 
@@ -118,11 +129,12 @@ function render()
     var rotatey = rotateY(lightAngleY);
     var rotatexy = mult(rotatey, rotatex);
     
+    var rotatexy = mult(rotatex, rotatey);
 
     var rotate = mult(rotatexy, lighting.light_position);
 
     //viewMat * (LightAngleY*lightPosition)
-    var lpos = mult(viewMat,rotate);
+    var lpos = mult(viewMat, rotate);
     gl.uniform4fv(uLight_position, lpos);
 
     stack.multiply(rotateY(lightAngleY));
@@ -148,24 +160,51 @@ function render()
     stack.pop();
     
     stack.push();
-    stack.multiply(translate(3.5,0,1));
+    stack.multiply(translate(3.5,0,0));
     mar = new Market();
     mar.drawMarket();
     stack.pop();
     
     stack.push();
-    stack.multiply(translate(3.5,0,0));
+    stack.multiply(translate(3.5,0,1));
     off = new Office();
     off.drawOffice();
     stack.pop();
     
     stack.push();
-    stack.multiply(translate(3.5,0,-1));
+    stack.multiply(translate(3.5,0,2));
     fac = new Factory();
     fac.drawFactory();
     stack.pop();
     
     
+    stack.push();
+    stack.multiply((translate(3.5, 0, 3)));
+    park = Shapes.park;
+    park.drawPark(0.05);
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    stack.pop();
+//
+    stack.push();
+    stack.multiply(translate(3.5, 0, 4));
+    apartment = Shapes.apartment;
+    apartment.drawApartment(2);
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    stack.pop();
+//
+//
+    stack.push();
+    //stack.multiply(scalem(1,1,1));
+    stack.multiply(translate(3.5, 0, 5));
+    hospital = Shapes.hospital;
+    hospital.drawHospital(2);
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    stack.pop();
+//
+//
+//    
+//    
+//    
     if (Math.abs(xco) > xbar){
         xdir = !xdir;
     }
@@ -189,9 +228,10 @@ function render()
     gl.uniform1f(uColorMode, 0);
     stack.push();
     stack.multiply(translate(xco,0.1,zco));
-    stack.multiply(scalem(0.2,0.2,0.2));
+    stack.multiply(scalem(0.1,0.1,0.1));
     gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
     Shapes.drawPrimitive(Shapes.cube);
     stack.pop();
+
 }
 

@@ -14,7 +14,7 @@
 ///// Always use the Right Hand Rule to generate vertex sequence. We want outward facing normals.
 function Road() {
 
-    this.name = "cube";
+    this.name = "road";
 
     this.numVertices = 36; //road(36) + sidewalk.R(36) + sidewalk.L(36)
     this.numTriangles = this.numVertices / 3;
