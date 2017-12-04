@@ -201,26 +201,26 @@ function animate() {
 //        off.drawOffice();
 //        stack.pop();
 
-        stack.push();
-        stack.multiply(translate(3.5, 0, 2));
-        fac = new Factory();
-        fac.drawFactory();
-        stack.pop();
+//        stack.push();
+//        stack.multiply(translate(3.5, 0, 2));
+//        fac = new Factory();
+//        fac.drawFactory();
+//        stack.pop();
 
 
-        stack.push();
-        stack.multiply((translate(3.5, 0, 3)));
-        park = Shapes.park;
-        park.drawPark(0.05);
-        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-        stack.pop();
+//        stack.push();
+//        stack.multiply((translate(3.5, 0, 3)));
+//        park = Shapes.park;
+//        park.drawPark(0.05);
+//        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//        stack.pop();
 //
-        stack.push();
-        stack.multiply(translate(3.5, 0, 4));
-        apartment = Shapes.apartment;
-        apartment.drawApartment(2);
-        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-        stack.pop();
+//        stack.push();
+//        stack.multiply(translate(3.5, 0, 4));
+//        apartment = Shapes.apartment;
+//        apartment.drawApartment(2);
+//        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//        stack.pop();
 //
 //
         stack.push();
@@ -333,19 +333,19 @@ function render()
 //    stack.pop();
 
 
-    stack.push();
-    stack.multiply((translate(3.5, 0, 3)));
-    park = Shapes.park;
-    park.drawPark(0.05);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    stack.pop();
+//    stack.push();
+//    stack.multiply((translate(3.5, 0, 3)));
+//    park = Shapes.park;
+//    park.drawPark(0.05);
+//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//    stack.pop();
 //
-    stack.push();
-    stack.multiply(translate(3.5, 0, 4));
-    apartment = Shapes.apartment;
-    apartment.drawApartment(2);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    stack.pop();
+//    stack.push();
+//    stack.multiply(translate(3.5, 0, 4));
+//    apartment = Shapes.apartment;
+//    apartment.drawApartment(2);
+//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//    stack.pop();
 //
 //
     stack.push();

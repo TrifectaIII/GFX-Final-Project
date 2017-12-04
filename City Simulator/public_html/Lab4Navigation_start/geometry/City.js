@@ -26,9 +26,9 @@ function City() {
     City.prototype.drawBuildings = function () {
         Shapes.city.drawMarket();
         Shapes.city.drawOffice();
-        //Shapes.city.drawFactory();
-        //Shapes.city.drawPark();
-        //Shapes.city.drawApartment();
+        Shapes.city.drawFactory();
+        Shapes.city.drawPark();
+        Shapes.city.drawApartment();
         //Shapes.city.drawHospital();
     };
 
@@ -55,7 +55,22 @@ function City() {
         fac.drawFactory();
         stack.pop();
     };
-    
+
+    City.prototype.drawPark = function () {
+        stack.push();
+        stack.multiply(translate(2.5, 0, 3));
+        park = new Park();
+        park.drawPark();
+        stack.pop();
+    };
+
+    City.prototype.drawApartment = function () {
+        stack.push();
+        stack.multiply(translate(2.5, 0, 4));
+        apr = new Apartment();
+        apr.drawApartment();
+        stack.pop();
+    };
 
 
 }
