@@ -115,7 +115,6 @@ function City() {
         } else {
             stack.multiply(translate(1.5, 0, cityMap.positions[3]));
         }
-        stack.multiply(rotateY(180));
         park = new Park();
         park.drawPark();
         stack.pop();
@@ -139,7 +138,6 @@ function City() {
         } else {
             stack.multiply(translate(1.5, 0, cityMap.positions[4]));
         }
-        stack.multiply(rotateY(180));
         apr = new Apartment();
         apr.drawApartment();
         stack.pop();
@@ -163,7 +161,6 @@ function City() {
         } else {
             stack.multiply(translate(1.5, 0, cityMap.positions[5]));
         }
-        stack.multiply(rotateY(180));
         hos = new Hospital();
         hos.drawHospital();
         stack.pop();
