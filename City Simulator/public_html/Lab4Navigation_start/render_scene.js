@@ -12,6 +12,8 @@ var uColorMode;
 var camera = new Camera();
 var stack = new MatrixStack();
 var lighting = new Lighting();
+
+var cityMap;
 var lightAngleY = 5;
 var lightAngleX = 5;
 var program;
@@ -19,10 +21,12 @@ var program;
 //cityMap = new CityMap(10, 2);
 
 
-//Textures
-//Image Textures
+//Images
+//
+//Image Textures---------------------------------------------Image Textures//
 var officetex;
 var factorytex;
+var markettex;
 var tenttex;
 var poletex;
 var greentex;
@@ -30,9 +34,20 @@ var Tapartment;
 var Tpark;
 var Thospital;
 var roofbw;
-var roof;
+var rooftex;
 var imageTexture;
 var road;
+//Image Textures---------------------------------------------Image Textures//
+
+//Image Graphics---------------------------------------------Image Graphics//
+var officegx;
+var factorygx;
+var marketgx;
+var apartmentgx;
+var hospitalgx;
+
+
+//Image Graphics---------------------------------------------Image Graphics//
 //Procedural Textures
 var checkerboard;
 var greyscale;
@@ -78,13 +93,20 @@ window.onload = function init()
     greentex = new ImageTexture("../textures/green.jpg");
     officetex = new ImageTexture("../textures/office.jpg");
     factorytex = new ImageTexture("../textures/factory.jpg");
+    markettex = new ImageTexture("../textures/market.jpg")
 
-    roof = new ImageTexture("../textures/roofing.jpg");
+    rooftex = new ImageTexture("../textures/roofing.jpg");
     roofbw = new ImageTexture("../textures/roofingBW.jpg");
     Tapartment = new ImageTexture("../textures/Apartment.jpg");
     Tpark = new ImageTexture("../textures/park.jpg");
     Tsidewalk = new ImageTexture("../textures/Sidewalk.jpg");
     Thospital = new ImageTexture("../textures/Hospital.jpg");
+
+    officegx = new ImageTexture("../textures/Work Graphic.jpg");
+    factorygx = new ImageTexture("../textures/Factory Graphic.png");
+    marketgx = new ImageTexture("../textures/Market Graphic.jpg");
+    apartmentgx = new ImageTexture("../textures/House Graphic.png");
+    hospitalgx = new ImageTexture("../textures/Hospital Graphic.png");
 
     //cityGenerator = new CityGenerator(10);
 
@@ -223,13 +245,13 @@ function animate() {
 //        stack.pop();
 //
 //
-        stack.push();
-        //stack.multiply(scalem(1,1,1));
-        stack.multiply(translate(3.5, 0, 5));
-        hospital = Shapes.hospital;
-        hospital.drawHospital(2);
-        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-        stack.pop();
+//        stack.push();
+//        //stack.multiply(scalem(1,1,1));
+//        stack.multiply(translate(3.5, 0, 5));
+//        hospital = Shapes.hospital;
+//        hospital.drawHospital(2);
+//        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//        stack.pop();
 //
 //
 //    
@@ -348,13 +370,13 @@ function render()
 //    stack.pop();
 //
 //
-    stack.push();
-    //stack.multiply(scalem(1,1,1));
-    stack.multiply(translate(3.5, 0, 5));
-    hospital = Shapes.hospital;
-    hospital.drawHospital(2);
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    stack.pop();
+//    stack.push();
+//    //stack.multiply(scalem(1,1,1));
+//    stack.multiply(translate(3.5, 0, 5));
+//    hospital = Shapes.hospital;
+//    hospital.drawHospital(2);
+//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//    stack.pop();
 //
 //
 //    

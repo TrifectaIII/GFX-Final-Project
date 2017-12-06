@@ -24,9 +24,9 @@ Factory.prototype.drawFactory = function () {
     Shapes.drawPrimitive(Shapes.cylinder);
     stack.pop();
     
-    gl.uniform1f(uColorMode, 1);
-    gl.uniform4fv(uColor, vec4(0.505, 0.360, 0.215,1));
+    
     stack.push();
+    factorygx.activate();
     stack.multiply(translate(-0.48,0,0));
     stack.multiply(scalem(0.1,0.3,0.3));
     stack.multiply(translate(0, 0.5, 0));

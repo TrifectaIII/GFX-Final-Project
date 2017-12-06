@@ -20,6 +20,7 @@ Shapes.apartment = new Apartment();
 Shapes.park = new Park();
 Shapes.hospital = new Hospital();
 Shapes.city = new City();
+Shapes.ground = new Ground();
 //Shapes.roof = new Roof();
 
 //Shapes.apartment = new Apartment();
