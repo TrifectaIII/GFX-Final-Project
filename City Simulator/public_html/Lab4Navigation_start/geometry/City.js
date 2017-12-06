@@ -39,13 +39,23 @@ function City() {
     City.prototype.drawMarket = function () {
 
         stack.push();
-        stack.multiply(translate(1.5, 0, -2.5));
+        if (cityMap.rotate[0] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[0]));
+            stack.multiply(rotateY(180));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[0]));
+        }
         mar = new Market();
         mar.drawMarket();
         stack.pop();
 
         stack.push();
-        stack.multiply(translate(1.5, 0, -1.5));
+        if (cityMap.rotate[0] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[0] + 1));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[0] + 1));
+        }
+
         g1 = new Ground();
         g1.drawGround();
         stack.pop();
@@ -53,13 +63,22 @@ function City() {
 
     City.prototype.drawOffice = function () {
         stack.push();
-        stack.multiply(translate(1.5, 0, -0.5));
+        if (cityMap.rotate[1] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[1]));
+            stack.multiply(rotateY(180));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[1]));
+        }
         off = new Office();
         off.drawOffice();
         stack.pop();
 
         stack.push();
-        stack.multiply(translate(1.5, 0, 0.5));
+        if (cityMap.rotate[1] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[1] + 1));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[1] + 1));
+        }
         g1 = new Ground();
         g1.drawGround();
         stack.pop();
@@ -67,13 +86,22 @@ function City() {
 
     City.prototype.drawFactory = function () {
         stack.push();
-        stack.multiply(translate(1.5, 0, 1.5));
+        if (cityMap.rotate[2] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[2]));
+            stack.multiply(rotateY(180));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[2]));
+        }
         fac = new Factory();
         fac.drawFactory();
         stack.pop();
 
         stack.push();
-        stack.multiply(translate(1.5, 0, 2.5));
+        if (cityMap.rotate[2] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[2] + 1));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[2] + 1));
+        }
         g1 = new Ground();
         g1.drawGround();
         stack.pop();
@@ -81,14 +109,23 @@ function City() {
 
     City.prototype.drawPark = function () {
         stack.push();
-        stack.multiply(translate(-1.5, 0, -2.5));
+        if (cityMap.rotate[3] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[3]));
+            stack.multiply(rotateY(180));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[3]));
+        }
         stack.multiply(rotateY(180));
         park = new Park();
         park.drawPark();
         stack.pop();
 
         stack.push();
-        stack.multiply(translate(-1.5, 0, -1.5));
+        if (cityMap.rotate[3] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[3] + 1));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[3] + 1));
+        }
         g1 = new Ground();
         g1.drawGround();
         stack.pop();
@@ -96,14 +133,23 @@ function City() {
 
     City.prototype.drawApartment = function () {
         stack.push();
-        stack.multiply(translate(-1.5, 0, -0.5));
+        if (cityMap.rotate[4] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[4]));
+            stack.multiply(rotateY(180));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[4]));
+        }
         stack.multiply(rotateY(180));
         apr = new Apartment();
         apr.drawApartment();
         stack.pop();
 
         stack.push();
-        stack.multiply(translate(-1.5, 0, 0.5));
+        if (cityMap.rotate[4] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[4] + 1));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[4] + 1));
+        }
         g1 = new Ground();
         g1.drawGround();
         stack.pop();
@@ -111,14 +157,23 @@ function City() {
 
     City.prototype.drawHospital = function () {
         stack.push();
-        stack.multiply(translate(-1.5, 0, 1.5));
+        if (cityMap.rotate[5] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[5]));
+            stack.multiply(rotateY(180));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[5]));
+        }
         stack.multiply(rotateY(180));
         hos = new Hospital();
         hos.drawHospital();
         stack.pop();
 
         stack.push();
-        stack.multiply(translate(-1.5, 0, 2.5));
+        if (cityMap.rotate[5] === true) {
+            stack.multiply(translate(-1.5, 0, cityMap.positions[5] + 1));
+        } else {
+            stack.multiply(translate(1.5, 0, cityMap.positions[5] + 1));
+        }
         g1 = new Ground();
         g1.drawGround();
         stack.pop();
