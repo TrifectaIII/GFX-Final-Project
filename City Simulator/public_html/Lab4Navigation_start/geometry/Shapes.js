@@ -21,6 +21,7 @@ Shapes.park = new Park();
 Shapes.hospital = new Hospital();
 Shapes.city = new City();
 Shapes.ground = new Ground();
+Shapes.sphere = new Sphere(100);
 //Shapes.roof = new Roof();
 
 //Shapes.apartment = new Apartment();
@@ -38,6 +39,7 @@ Shapes.initShapes = function () {
     //Shapes.initBuffers(Shapes.roof);
     //Shapes.initBuffers(Shapes.apartment);
     Shapes.initBuffers(Shapes.frustum);
+    Shapes.initBuffers(Shapes.sphere);
     //Shapes.axis.initBuffer();
 };
 

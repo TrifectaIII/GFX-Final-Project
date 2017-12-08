@@ -37,6 +37,7 @@ var roofbw;
 var rooftex;
 var imageTexture;
 var road;
+var skytex;
 //Image Textures---------------------------------------------Image Textures//
 
 //Image Graphics---------------------------------------------Image Graphics//
@@ -94,6 +95,8 @@ window.onload = function init()
     officetex = new ImageTexture("../textures/office.jpg");
     factorytex = new ImageTexture("../textures/factory.jpg");
     markettex = new ImageTexture("../textures/market.jpg")
+
+    skytex = new ImageTexture("../textures/sky.jpg")
 
     rooftex = new ImageTexture("../textures/roofing.jpg");
     roofbw = new ImageTexture("../textures/roofingBW.jpg");
@@ -290,7 +293,14 @@ function animate() {
         Shapes.city.drawCity();
         stack.pop();
 
-
+        stack.push();
+        gl.uniform1f(uColorMode, 2);
+        gl.uniform4fv(uColor, vec4(0.113, 0.682, 0.886,1));
+        skytex.activate();
+        stack.multiply(scalem(50,50,50));
+        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+        Shapes.drawPrimitive(Shapes.sphere);
+        stack.pop();
     }
 }
 
@@ -415,7 +425,14 @@ function render()
     Shapes.city.drawCity();
     stack.pop();
 
-
+    stack.push();
+    gl.uniform1f(uColorMode, 2);
+    gl.uniform4fv(uColor, vec4(0.113, 0.682, 0.886,1));
+    skytex.activate();
+        stack.multiply(scalem(50,50,50));
+        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+        Shapes.drawPrimitive(Shapes.sphere);
+        stack.pop();
 
 
 
