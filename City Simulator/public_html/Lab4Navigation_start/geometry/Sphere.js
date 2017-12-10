@@ -75,6 +75,15 @@ function Sphere(num_sides) { //start with disks instead of cylinders
             this.normals.push(norm,norm2,norm3,norm3,norm2,norm4);
             this.texCoords.push(t1,t1,t1,t1,t1,t1);
         }
+    }
+    
+    self = this;
+    for (var i = 0; i < self.normals.length; i++) {
+        var neg0 = -self.normals[i][0];
+        var neg1 = -self.normals[i][1];
+        var neg2 = -self.normals[i][2];
+        var reg3 = -self.normals[i][3];
         
+        self.normals[i] = vec4(neg0,neg1,neg2,reg3);
     }
 }
