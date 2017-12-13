@@ -151,7 +151,10 @@
         <script type="text/javascript" src="geometry/Axis.js"></script>
         <script type="text/javascript" src="geometry/Road.js"></script>
         <script type="text/javascript" src="geometry/Frustum.js"></script>
+        <script type="text/javascript" src="geometry/Skybox.js"></script>
         <script type="text/javascript" src="geometry/City.js"></script>
+        <script type="text/javascript" src="geometry/Citizens.js"></script>
+        <script type="text/javascript" src="geometry/Person.js"></script>
 
         <script type="text/javascript" src="geometry/CityMap.js"></script>
 
@@ -191,9 +194,32 @@
                             <li>[Middle Mouse wheel] . zoom in/out</li> 
                             <li>[Left Mouse drag] .... tumble about origin</li> 
                         </ul> </div>
-                    <div id="keypress"><b>Key pressed:</b> </div>
-                    <div id="mouseAction"><b>Action:</b> </div>
-                    <div id="mouseState"><b>Mouse State:</b></div>  
+                    <div id="Size"><b>Change City Size</b> </div>
+                    <!--                    <div id="mouseAction"><b>Action:</b> </div>
+                                        <div id="mouseState"><b>Mouse State:</b></div>  -->
+
+
+
+                    <button id= "1Button">1</button>
+                    <button id= "5Button">5</button>
+                    <button id= "25Button">25</button>
+                    <button id= "50Button">50</button>
+
+                    <br/><br/>
+
+                    <div id="personState"><b>Person to String</b></div> 
+                    <button id= "viewButton">scrum</button> 
+                    
+                    <br/><br/>
+                    
+                    <select id="speedChoice">
+                        <option value="0">Snail</option>
+                        <option value="1">Turtle</option>
+                        <option value="2">African Swallow</option>
+                        <option value="3">Cheetah</option>
+                        <option value="4">Light</option>
+                        <!-- TO DO:  ADD OTHER SHAPES -->
+                    </select>
 
                 </td> </tr>
         </table>
