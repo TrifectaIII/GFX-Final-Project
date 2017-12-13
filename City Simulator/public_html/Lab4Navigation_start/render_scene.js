@@ -41,6 +41,8 @@ var rooftex;
 var imageTexture;
 var road;
 var skytex;
+var grasstex;
+
 //Image Textures---------------------------------------------Image Textures//
 
 //Image Graphics---------------------------------------------Image Graphics//
@@ -101,6 +103,9 @@ window.onload = function init()
     factorytex = new ImageTexture("../textures/factory.jpg");
     markettex = new ImageTexture("../textures/market.jpg");
     skytex = new ImageTexture("../textures/Sky.jpg");
+
+    skytex = new ImageTexture("../textures/sky.jpg")
+    grasstex = new ImageTexture("../textures/grassy.jpg")
 
     rooftex = new ImageTexture("../textures/roofing.jpg");
     roofbw = new ImageTexture("../textures/roofingBW.jpg");
@@ -355,7 +360,23 @@ function animate() {
         Shapes.city.incrementCitizens();
         stack.pop();
 
-
+        stack.push();
+        gl.uniform1f(uColorMode, 2);
+        gl.uniform4fv(uColor, vec4(0.113, 0.682, 0.886,1));
+        skytex.activate();
+        stack.multiply(scalem(50,50,50));
+        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+        Shapes.drawPrimitive(Shapes.sphere);
+        stack.pop();
+        
+        stack.push();
+    gl.uniform1f(uColorMode, 2);
+    grasstex.activate();
+    stack.multiply(scalem(50,50,50));
+    stack.multiply(rotateX(90));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    Shapes.drawPrimitive(Shapes.disk);
+    stack.pop();
     }
 }
 
@@ -482,7 +503,22 @@ function render()
     Shapes.city.drawCitizens();
     stack.pop();
 
-
+    stack.push();
+    gl.uniform1f(uColorMode, 2);
+    skytex.activate();
+    stack.multiply(scalem(50,50,50));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    Shapes.drawPrimitive(Shapes.sphere);
+    stack.pop();
+    
+    stack.push();
+    gl.uniform1f(uColorMode, 2);
+    grasstex.activate();
+    stack.multiply(scalem(50,50,50));
+    stack.multiply(rotateX(90));
+    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+    Shapes.drawPrimitive(Shapes.disk);
+    stack.pop();
 
 
 
