@@ -3,13 +3,14 @@ function CityMap(l, w) {
     this.width = w;
     this.height = -0.5;
     this.generate();
-    
+
     //var rotate;
 
 }
 
 CityMap.prototype.generate = function () {
     this.positions = [];
+    //market:0, office:1, factory:2, park:3, apartment:4, hospital:5
     this.rotate = [];
 
     for (var i = 0; i < 6; i++) {
@@ -25,13 +26,13 @@ CityMap.prototype.generate = function () {
     for (var i = 0; i < 6; i++) {
         if (this.positions[i] > 2) {
             this.rotate[i] = true;
-            this.positions[i] = this.positions[i]-3;
+            this.positions[i] = this.positions[i] - 3;
             //this.positions[i] = -this.positions[i];
         } else {
             this.rotate[i] = false;
         }
-        this.positions[i] = this.positions[i]*-2+1.5;
-        
+        this.positions[i] = this.positions[i] * -2 + 1.5;
+
     }
 
     for (var i = 0; i < 6; i++) {

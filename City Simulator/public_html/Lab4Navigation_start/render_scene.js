@@ -17,6 +17,9 @@ var cityMap;
 var lightAngleY = 5;
 var lightAngleX = 5;
 var program;
+var nPeople;
+var nPerson = 0;
+var fps;
 
 //cityMap = new CityMap(10, 2);
 
@@ -37,6 +40,7 @@ var roofbw;
 var rooftex;
 var imageTexture;
 var road;
+var skytex;
 //Image Textures---------------------------------------------Image Textures//
 
 //Image Graphics---------------------------------------------Image Graphics//
@@ -57,7 +61,7 @@ var greyscale;
 window.onload = function init()
 {
     //set Event Handlers
-    setKeyEventHandler();
+    //setKeyEventHandler();
     setMouseEventHandler();
 
     canvas = document.getElementById("gl-canvas");
@@ -79,6 +83,8 @@ window.onload = function init()
 
     shaderSetup();
 
+    initWindowListeners(); // setup button controls
+
 
     Shapes.initShapes();  // create the primitive and other shapes       
 
@@ -93,7 +99,8 @@ window.onload = function init()
     greentex = new ImageTexture("../textures/green.jpg");
     officetex = new ImageTexture("../textures/office.jpg");
     factorytex = new ImageTexture("../textures/factory.jpg");
-    markettex = new ImageTexture("../textures/market.jpg")
+    markettex = new ImageTexture("../textures/market.jpg");
+    skytex = new ImageTexture("../textures/Sky.jpg");
 
     rooftex = new ImageTexture("../textures/roofing.jpg");
     roofbw = new ImageTexture("../textures/roofingBW.jpg");
@@ -110,7 +117,58 @@ window.onload = function init()
 
     //cityGenerator = new CityGenerator(10);
 
+
+    startAnimating(30);
     render();
+};
+
+function initWindowListeners() {
+    //event listeners for buttons   
+    document.getElementById("1Button").onclick = function () {
+        Shapes.city = new City(1);
+        nPeople = 0;
+    };
+    document.getElementById("5Button").onclick = function () {
+        Shapes.city = new City(5);
+        nPeople = 4;
+    };
+    document.getElementById("25Button").onclick = function () {
+        Shapes.city = new City(25);
+        nPeople = 24;
+    };
+    document.getElementById("50Button").onclick = function () {
+        Shapes.city = new City(50);
+        nPeople = 49;
+    };
+    document.getElementById("viewButton").onclick = function () {
+        if (nPerson === nPeople) {
+            nPerson = 0;
+        } else {
+            nPerson++;
+        }
+        document.getElementById("personState").innerHTML = Shapes.city.personToString(nPerson);
+    };
+    document.getElementById("speedChoice").onclick = function (event) {
+        var x = document.getElementById("speedChoice").selectedIndex;
+        switch (x) {   // cube=0, cylinder=1, cone=2, disk=3
+            case 0:
+                startAnimating(10);
+                break;
+            case 1:
+                startAnimating(24);
+                break;
+            case 2:
+                startAnimating(30);
+                break;
+            case 3:
+                startAnimating(60);
+                break;
+            case 4:
+                startAnimating(1000);
+                break;
+                // TO DO:  ADD OTHER CASES FOR OTHER SHAPES
+        }
+    };
 };
 
 /**
@@ -137,22 +195,22 @@ function shaderSetup() {
     uProjection = gl.getUniformLocation(program, "uProjection"); // projection matrix
     uModel_view = gl.getUniformLocation(program, "uModel_view");  // model-view matrix
     uColorMode = gl.getUniformLocation(program, "uColorMode");
-    startAnimating(30);
+    
 }
 
-var zdir = true;
-var xdir = true;
-var xco = 0;
-var zco = 0;
-
-var zbar = 10;
-var xbar = 3;
+var spos = true;
+//var xdir = true;
+var sro = 0.05;
+//var zco = 0;
+//
+//var zbar = 10;
+//var xbar = 3;
 
 
 var stop = false;
 var frameCount = 0;
 var $results = ("#results");
-var fps, fpsInterval, startTime, now, then, elapsed;
+var fpsInterval, startTime, now, then, elapsed;
 
 //initializes the timer variables and starts the animation
 function startAnimating(fps) {
@@ -257,37 +315,44 @@ function animate() {
 //    
 //    
 //    
-        if (Math.abs(xco) > xbar) {
-            xdir = !xdir;
+//        if (Math.abs(xco) > xbar) {
+//            xdir = !xdir;
+//        }
+//        if (Math.abs(zco) > zbar) {
+//            zdir = !zdir;
+//        }
+//
+        if (spos) {
+            sro = sro + 0.01;
+            rotatex = rotatex + sro;
         }
-        if (Math.abs(zco) > zbar) {
-            zdir = !zdir;
-        }
+//        } else {
+//            xco = xco - 0.1;
+//        }
+//
+//
+//        if (zdir) {
+//            zco = zco + 0.1;
+//        } else {
+//            zco = zco - 0.1;
+//        }
 
-        if (xdir) {
-            xco = xco + 0.1;
-        } else {
-            xco = xco - 0.1;
-        }
+//        gl.uniform1f(uColorMode, 0);
+//        stack.push();
+//        stack.multiply(translate(xco, 0.1, zco));
+//        stack.multiply(scalem(0.1, 0.1, 0.1));
+//        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//        Shapes.drawPrimitive(Shapes.cube);
+//        stack.pop();
+
+        document.getElementById("personState").innerHTML = Shapes.city.personToString(nPerson);
 
 
-        if (zdir) {
-            zco = zco + 0.1;
-        } else {
-            zco = zco - 0.1;
-        }
-
-        gl.uniform1f(uColorMode, 0);
         stack.push();
-        stack.multiply(translate(xco, 0.1, zco));
-        stack.multiply(scalem(0.1, 0.1, 0.1));
-        gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-        Shapes.drawPrimitive(Shapes.cube);
-        stack.pop();
-
-        stack.push();
-        City = Shapes.city;
+        //City = Shapes.city;
         Shapes.city.drawCity();
+        Shapes.city.drawCitizens();
+        Shapes.city.incrementCitizens();
         stack.pop();
 
 
@@ -402,17 +467,19 @@ function render()
 //        zco = zco - 0.1;
 //    }
 
-    gl.uniform1f(uColorMode, 0);
-    stack.push();
-    stack.multiply(translate(xco, 0.1, zco));
-    stack.multiply(scalem(0.1, 0.1, 0.1));
-    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
-    Shapes.drawPrimitive(Shapes.cube);
-    stack.pop();
+//    gl.uniform1f(uColorMode, 0);
+//    stack.push();
+//    stack.multiply(translate(xco, 0.1, zco));
+//    stack.multiply(scalem(0.1, 0.1, 0.1));
+//    gl.uniformMatrix4fv(uModel_view, false, flatten(stack.top()));
+//    Shapes.drawPrimitive(Shapes.cube);
+//    stack.pop();
+
 
     stack.push();
-    City = Shapes.city;
+    //City = Shapes.city;
     Shapes.city.drawCity();
+    Shapes.city.drawCitizens();
     stack.pop();
 
 
